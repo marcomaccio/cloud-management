@@ -74,10 +74,10 @@ pipeline {
 
                             sh "${TERRAFORM_HOME}/terraform apply auditing.tfplan"
 
-                            script {
-                                awsYveFEPubIp = sh(returnStdout: true, script: '${TERRAFORM_HOME}/terraform output aws_yve_sv_eip_fe_ip').trim()
-                                echo "FE Public Ip:  ${awsYveFEPubIp}"
-                            }
+                            //script {
+                            //    awsYveFEPubIp = sh(returnStdout: true, script: '${TERRAFORM_HOME}/terraform output aws_yve_sv_eip_fe_ip').trim()
+                            //    echo "FE Public Ip:  ${awsYveFEPubIp}"
+                            //}
                         }
                     }
                 }
