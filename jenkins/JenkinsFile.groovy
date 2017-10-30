@@ -41,7 +41,7 @@ pipeline {
         stage('Auditing-Creation') {
             agent any
             steps {
-                echo 'VPC-Creation stage: this will create the VPC networking'
+                echo 'CloudTrail-CloudWatch-Creation stage: this will create resources to audit AWS resources'
 
                 wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
 
