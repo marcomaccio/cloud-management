@@ -36,35 +36,35 @@ resource "aws_s3_bucket_policy" "auditing_s3_bucket_policy" {
   bucket = "${aws_s3_bucket.auditing_s3_bucket.id}"
 
   policy = <<POLICY
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "AWSCloudTrailAclCheck",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "cloudtrail.amazonaws.com"
-        },
-        "Action": "s3:GetBucketAcl",
-        "Resource": "${aws_s3_bucket.auditing_s3_bucket.arn}"
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AWSCloudTrailAclCheck",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
       },
-      {
-        "Sid": "AWSCloudTrailWrite",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "cloudtrail.amazonaws.com"
-        },
-        "Action": "s3:PutObject",
-        "Resource": "${aws_s3_bucket.auditing_s3_bucket.arn}/*",
-        "Condition": {
-          "StringEquals": {
-            "s3:x-amz-acl": "bucket-owner-full-control"
-          }
+      "Action": "s3:GetBucketAcl",
+      "Resource": "${aws_s3_bucket.auditing_s3_bucket.arn}"
+    },
+    {
+      "Sid": "AWSCloudTrailWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "${aws_s3_bucket.auditing_s3_bucket.arn}/*",
+      "Condition": {
+        "StringEquals": {
+          "s3:x-amz-acl": "bucket-owner-full-control"
         }
       }
-    ]
-  }
-  POLICY
+    }
+  ]
+}
+POLICY
 }
 
 # --------------------------------------------------------------------------------------
@@ -90,20 +90,20 @@ resource "aws_cloudwatch_log_stream" "auditing_cloudwatch_log_stream" {
 resource "aws_iam_role" "auditing_iam_role_cloudtrail" {
   name = "cloudtrail-to-cloudwatch-${var.aws_cloudtrail_name}"
   assume_role_policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "cloudtrail.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      }
-    ]
-  }
-  EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
 }
 
 # --------------------------------------------------------------------------------------
@@ -157,32 +157,32 @@ resource "aws_iam_policy" "auditing_iam_policy_cloudtrail" {
   name = "cloudtrail-to-cloudwatch-${var.aws_cloudtrail_name}"
   description = "Deliver logs from CloudTrail to CloudWatch."
   policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "AWSCloudTrailCreateLogStream",
-        "Effect": "Allow",
-        "Action": [
-          "logs:CreateLogStream"
-        ],
-        "Resource": [
-          "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.name}:log-stream:${var.aws_account_id}_CloudTrail_${var.aws_region}*"
-        ]
-      },
-      {
-        "Sid": "AWSCloudTrailPutLogEvents",
-        "Effect": "Allow",
-        "Action": [
-          "logs:PutLogEvents"
-        ],
-        "Resource": [
-          "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.name}:log-stream:${var.aws_account_id}_CloudTrail_${var.aws_region}*"
-        ]
-      }
-    ]
-  }
-  EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AWSCloudTrailCreateLogStream",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream"
+      ],
+      "Resource": [
+        "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.name}:log-stream:${var.aws_account_id}_CloudTrail_${var.aws_region}*"
+      ]
+    },
+    {
+      "Sid": "AWSCloudTrailPutLogEvents",
+      "Effect": "Allow",
+      "Action": [
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.name}:log-stream:${var.aws_account_id}_CloudTrail_${var.aws_region}*"
+      ]
+    }
+  ]
+}
+EOF
 }
 
 resource "aws_iam_role_policy_attachment" "auditing_iam_role_policy_attachement" {
