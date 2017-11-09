@@ -207,6 +207,8 @@ resource "aws_cloudtrail" "auditing_cloudtrail" {
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.arn}"
   cloud_watch_logs_role_arn     = "${aws_iam_role.auditing_iam_role_cloudtrail.arn}"
 
+  depends_on                    = ["aws_s3_bucket_policy.auditing_s3_bucket_policy"]
+
   tags {
     "name"        = "auditing"
     "projectName" = "${var.project_name}"
