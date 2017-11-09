@@ -90,7 +90,7 @@ resource "aws_cloudwatch_log_stream" "auditing_cloudwatch_log_stream" {
 */
 
 resource "aws_iam_role" "auditing_iam_role_cloudtrail" {
-  name = "cloudtrail-to-cloudwatch-${var.aws_cloudtrail_name}"
+  name = "CloudTrail_CloudWatchLogs_Role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
