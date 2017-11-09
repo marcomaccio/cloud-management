@@ -138,7 +138,7 @@ resource "aws_cloudwatch_metric_alarm" "auditing_cloudwatch_metric_alarm_unusedr
   evaluation_periods  = "1"
   metric_name         = "UnusedRegionActivity"
   namespace           = "AWS/Auditing"
-  period              = "5"
+  period              = "10"
   statistic           = "Average"
   threshold           = "80"
   alarm_description   = "This metric monitors the AWS API activity in unused regions"
