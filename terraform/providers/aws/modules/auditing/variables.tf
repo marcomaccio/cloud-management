@@ -37,3 +37,8 @@ variable "aws_cloudwatch_logs_log_stream_name" {
   default     = "mm-security-logstream"
   description = ""
 }
+
+variable "email_auditing" {
+  default     = ""
+  description = "email to notify when auditing notification has to be sent"
+}

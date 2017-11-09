@@ -14,6 +14,7 @@ pipeline {
         string(defaultValue: 'mm-globalsec-trail',              description: 'AWS CLoud Trail name',                                name: 'AWS_CLOUDTRAIL_NAME')
         string(defaultValue: 'CloudTrail/SecurityLogs',         description: 'AWS CloudWatch Logs log group name',                  name: 'AWS_CLOUDWATCH_LOGS_GROUP_NAME')
         string(defaultValue: 'mm-security-logstream',           description: 'AWS CloudWatch Logs log stream name',                 name: 'AWS_CLOUDWATCH_LOGS_LOG_STREAM_NAME')
+
     }
 
     environment {
@@ -70,7 +71,8 @@ pipeline {
                                     "-var 'aws_region=$AWS_S3_REGION'                       " +
                                     "-var 'aws_cloudtrail_name=$AWS_CLOUDTRAIL_NAME'        " +
                                     "-var 'aws_cloudwatch_log_group_name=$AWS_CLOUDWATCH_LOGS_GROUP_NAME'   " +
-                                    "-var 'aws_cloudwatch_logs_log_stream_name=$AWS_CLOUDWATCH_LOGS_LOG_STREAM_NAME' "
+                                    "-var 'aws_cloudwatch_logs_log_stream_name=$AWS_CLOUDWATCH_LOGS_LOG_STREAM_NAME' " +
+                                    "-var 'email_auditing=$CONTACT_EMAILS'              "
 
                             sh "${TERRAFORM_HOME}/terraform apply auditing.tfplan"
 
