@@ -82,10 +82,12 @@ resource "aws_cloudwatch_log_group" "auditing_cloudwatch_log_group" {
 # --------------------------------------------------------------------------------------
 #              CloudWatch Logs Log Stream Definition
 # --------------------------------------------------------------------------------------
+/*
 resource "aws_cloudwatch_log_stream" "auditing_cloudwatch_log_stream" {
   name           = "${var.aws_cloudwatch_logs_log_stream_name}"
   log_group_name = "${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.name}"
 }
+*/
 
 resource "aws_iam_role" "auditing_iam_role_cloudtrail" {
   name = "cloudtrail-to-cloudwatch-${var.aws_cloudtrail_name}"
@@ -134,12 +136,12 @@ resource "aws_cloudwatch_metric_alarm" "auditing_cloudwatch_metric_alarm_unusedr
   alarm_name          = "ActivityInUnUsedRegion"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
-  metric_name         = "MemoryUtilization"
+  metric_name         = "UnusedRegionActivity"
   namespace           = "AWS/Auditing"
-  period              = "300"
+  period              = "5"
   statistic           = "Average"
   threshold           = "80"
-  alarm_description   = "This metric monitors the activity in unused regions"
+  alarm_description   = "This metric monitors the AWS API activity in unused regions"
 
   //alarm_actions     = ["${aws_autoscaling_policy.mm_devpaas_asg_pol_scale_up.arn}"]
 
