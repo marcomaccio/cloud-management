@@ -23,6 +23,11 @@ variable "aws_region"  {
   description = "Region in cui create the S# bucket where all AWS API Calls are memorized"
 }
 
+variable "aws_s3_bucket_name_x_cloudtrail"    {
+  default     = ""
+  description = "Name of the cloud trail used to receive all logs "
+}
+
 variable "aws_cloudtrail_name"    {
   default     = ""
   description = "Name of the cloud trail used to receive all logs "

@@ -22,8 +22,8 @@ provider "aws" {
 #              S3 Bucket Definition
 # --------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "auditing_s3_bucket" {
-  bucket        = "${var.aws_cloudtrail_name}"
-  force_destroy = true
+  bucket        = "${var.aws_s3_bucket_name_x_cloudtrail}"
+  force_destroy = false
 
   // policy =  "${aws_s3_bucket_policy.auditing_s3_bucket_policy.id}" //"${file("policy_s3.json")}"
 
@@ -197,9 +197,10 @@ resource "aws_cloudtrail" "auditing_cloudtrail" {
 
   name                          = "${var.aws_cloudtrail_name}"
   s3_bucket_name                = "${aws_s3_bucket.auditing_s3_bucket.id}"
-  s3_key_prefix                 = "prefix"
+  //s3_key_prefix                 = "prefix"
   include_global_service_events = true
   is_multi_region_trail         = true
+  enable_logging                = true
 
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.auditing_cloudwatch_log_group.arn}"
   cloud_watch_logs_role_arn     = "${aws_iam_role.auditing_iam_role_cloudtrail.arn}"
